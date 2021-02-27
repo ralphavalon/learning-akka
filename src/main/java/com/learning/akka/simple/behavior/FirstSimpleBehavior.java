@@ -1,4 +1,4 @@
-package com.learning.akka.bigprimes.behavior;
+package com.learning.akka.simple.behavior;
 
 import akka.actor.typed.Behavior;
 import akka.actor.typed.javadsl.AbstractBehavior;

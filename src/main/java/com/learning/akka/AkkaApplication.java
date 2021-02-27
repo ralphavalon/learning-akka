@@ -1,6 +1,6 @@
 package com.learning.akka;
 
-import com.learning.akka.bigprimes.behavior.FirstSimpleBehavior;
+import com.learning.akka.simple.behavior.FirstSimpleBehavior;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
