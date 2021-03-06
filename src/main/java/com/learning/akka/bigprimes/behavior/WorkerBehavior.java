@@ -23,6 +23,8 @@ public class WorkerBehavior extends AbstractBehavior<WorkerBehavior.Command> {
     private ActorRef<ManagerBehavior.Command> sender;
   }
 
+  private BigInteger prime;
+
   private WorkerBehavior(ActorContext<WorkerBehavior.Command> context) {
     super(context);
   }
@@ -36,8 +38,11 @@ public class WorkerBehavior extends AbstractBehavior<WorkerBehavior.Command> {
     return newReceiveBuilder()
     .onAnyMessage(command -> {
       if ("start".equals(command.getMessage())) {
-        BigInteger bigInteger = new BigInteger(2000, new Random());
-        command.getSender().tell(new ManagerBehavior.ResultCommand(bigInteger.nextProbablePrime()));
+        if(prime == null) {
+          BigInteger bigInteger = new BigInteger(2000, new Random());
+          prime = bigInteger.nextProbablePrime();
+        }
+        command.getSender().tell(new ManagerBehavior.ResultCommand(prime));
       }
       return this;
     }).build();

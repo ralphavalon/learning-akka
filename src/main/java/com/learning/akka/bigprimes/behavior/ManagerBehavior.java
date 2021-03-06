@@ -49,6 +49,7 @@ public class ManagerBehavior extends AbstractBehavior<ManagerBehavior.Command> {
       for (int i = 0; i < 20; i++) {
         ActorRef<WorkerBehavior.Command> worker = getContext().spawn(WorkerBehavior.create(), "Worker" + i);
         worker.tell(new WorkerBehavior.Command("start", getContext().getSelf()));
+        worker.tell(new WorkerBehavior.Command("start", getContext().getSelf()));
       }
       return this;
     })
