@@ -1,5 +1,6 @@
 package com.learning.akka;
 
+import com.learning.akka.bigprimes.behavior.ManagerBehavior;
 import com.learning.akka.simple.behavior.FirstSimpleBehavior;
 
 import org.springframework.boot.CommandLineRunner;
@@ -17,7 +18,12 @@ public class AkkaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		
+		bigPrimesBehavior();
+	}
+
+	protected void bigPrimesBehavior() {
+		ActorSystem<String> actorSystem = ActorSystem.create(ManagerBehavior.create(), "BigPrimes");
+		actorSystem.tell("start");
 	}
 
 	protected void firstSimpleBehavior() {
