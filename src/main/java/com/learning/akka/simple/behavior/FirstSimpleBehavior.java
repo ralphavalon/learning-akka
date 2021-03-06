@@ -9,7 +9,7 @@ import akka.actor.typed.javadsl.Receive;
 
 public class FirstSimpleBehavior extends AbstractBehavior<String> {
 
-  public FirstSimpleBehavior(ActorContext<String> context) {
+  private FirstSimpleBehavior(ActorContext<String> context) {
     super(context);
   }
 

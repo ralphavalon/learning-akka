@@ -9,7 +9,7 @@ import akka.actor.typed.javadsl.Receive;
 
 public class ManagerBehavior extends AbstractBehavior<String> {
 
-  public ManagerBehavior(ActorContext<String> context) {
+  private ManagerBehavior(ActorContext<String> context) {
     super(context);
   }
 

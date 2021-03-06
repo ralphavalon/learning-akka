@@ -11,7 +11,7 @@ import akka.actor.typed.javadsl.Receive;
 
 public class WorkerBehavior extends AbstractBehavior<String> {
 
-  public WorkerBehavior(ActorContext<String> context) {
+  private WorkerBehavior(ActorContext<String> context) {
     super(context);
   }
 
