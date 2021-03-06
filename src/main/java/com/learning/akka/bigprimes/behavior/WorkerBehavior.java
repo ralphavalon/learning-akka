@@ -1,30 +1,44 @@
 package com.learning.akka.bigprimes.behavior;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Random;
 
+import akka.actor.typed.ActorRef;
 import akka.actor.typed.Behavior;
 import akka.actor.typed.javadsl.AbstractBehavior;
 import akka.actor.typed.javadsl.ActorContext;
 import akka.actor.typed.javadsl.Behaviors;
 import akka.actor.typed.javadsl.Receive;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-public class WorkerBehavior extends AbstractBehavior<String> {
+public class WorkerBehavior extends AbstractBehavior<WorkerBehavior.Command> {
 
-  private WorkerBehavior(ActorContext<String> context) {
+  @Getter
+  @AllArgsConstructor
+  public static class Command implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private String message;
+    private ActorRef<String> sender;
+  }
+
+  private WorkerBehavior(ActorContext<WorkerBehavior.Command> context) {
     super(context);
   }
 
-  public static Behavior<String> create() {
+  public static Behavior<WorkerBehavior.Command> create() {
     return Behaviors.setup(WorkerBehavior::new);
   }
 
   @Override
-  public Receive<String> createReceive() {
+  public Receive<WorkerBehavior.Command> createReceive() {
     return newReceiveBuilder()
-    .onMessageEquals("start", () -> {
-      BigInteger bigInteger = new BigInteger(2000, new Random());
-      System.out.println(bigInteger.nextProbablePrime() + "\n");
+    .onAnyMessage(command -> {
+      if ("start".equals(command.getMessage())) {
+        BigInteger bigInteger = new BigInteger(2000, new Random());
+        System.out.println(bigInteger.nextProbablePrime() + "\n");
+      }
       return this;
     }).build();
   }
