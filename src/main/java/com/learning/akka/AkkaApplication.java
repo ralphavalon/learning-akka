@@ -22,8 +22,8 @@ public class AkkaApplication implements CommandLineRunner {
 	}
 
 	protected void bigPrimesBehavior() {
-		ActorSystem<String> actorSystem = ActorSystem.create(ManagerBehavior.create(), "BigPrimes");
-		actorSystem.tell("start");
+		ActorSystem<ManagerBehavior.Command> actorSystem = ActorSystem.create(ManagerBehavior.create(), "BigPrimes");
+		actorSystem.tell(new ManagerBehavior.InstructionCommand("start"));
 	}
 
 	protected void firstSimpleBehavior() {
