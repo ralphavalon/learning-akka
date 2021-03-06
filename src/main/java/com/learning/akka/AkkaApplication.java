@@ -17,8 +17,13 @@ public class AkkaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+	}
+
+	protected void firstSimpleBehavior() {
 		ActorSystem<String> actorSystem = ActorSystem.create(FirstSimpleBehavior.create(), "FirstActorSystem");
 		actorSystem.tell("Testing message");
+		actorSystem.tell("create a child");
 	}
 
 }
