@@ -5,6 +5,7 @@ import java.util.Random;
 
 import akka.actor.typed.ActorRef;
 import akka.actor.typed.Behavior;
+import akka.actor.typed.PostStop;
 import akka.actor.typed.javadsl.AbstractBehavior;
 import akka.actor.typed.javadsl.ActorContext;
 import akka.actor.typed.javadsl.Behaviors;
@@ -86,8 +87,20 @@ public class RacerBehavior extends AbstractBehavior<RacerBehavior.Command> {
           .tell(new RaceController.RacerUpdateCommand(getContext().getSelf(), raceLength));
       message.getController()
           .tell(new RaceController.RacerFinishedCommand(getContext().getSelf()));
-      return Behaviors.ignore(); // it will ignore next messages
+      // return Behaviors.ignore(); // it will ignore next messages
+      return waitingToStop();
     }).build();
+  }
+
+  public Receive<Command> waitingToStop() {
+    return newReceiveBuilder()
+      .onAnyMessage(message -> {
+        return Behaviors.same();
+      })
+      .onSignal(PostStop.class, message -> {
+        getContext().getLog().info("I'm about to terminate!");
+        return Behaviors.same();
+      }).build();
   }
 
   private double getMaxSpeed() {
