@@ -84,7 +84,9 @@ public class RacerBehavior extends AbstractBehavior<RacerBehavior.Command> {
     return newReceiveBuilder().onMessage(PositionCommand.class, message -> {
       message.getController()
           .tell(new RaceController.RacerUpdateCommand(getContext().getSelf(), raceLength));
-      return Behaviors.same();
+      message.getController()
+          .tell(new RaceController.RacerFinishedCommand(getContext().getSelf()));
+      return Behaviors.ignore(); // it will ignore next messages
     }).build();
   }
 
