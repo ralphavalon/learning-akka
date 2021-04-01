@@ -19,7 +19,7 @@ public class AkkaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		racingBehavior();
+		bigPrimesBehavior();
 	}
 
 	protected void racingBehavior() {
